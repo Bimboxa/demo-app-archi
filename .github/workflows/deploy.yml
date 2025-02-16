@@ -36,6 +36,7 @@ jobs:
           path: build
 
       - name: Deploy to GitHub Pages
-        run: actions/github-pages@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/deploy-pages@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifact_name: "github-pages"
