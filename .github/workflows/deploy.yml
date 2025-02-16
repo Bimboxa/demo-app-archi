@@ -33,7 +33,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "github-pages"
-          path: build
+          path: ./build
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: "github-pages"
+          path: ./build
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v3
