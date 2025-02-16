@@ -2,6 +2,7 @@
   "name": "demo-app-archi",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://bimboxa.github.io/demo-app-archi",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
