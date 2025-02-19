@@ -7,8 +7,11 @@ import createShapeNode from "./helpersShapesManager.js/createShapeNode";
 import theme from "Styles/theme";
 
 export default class ShapesManager {
-  constructor({mapEditor}) {
+  constructor({mapEditor, onMapEditorIsReady}) {
     this.mapEditor = mapEditor;
+    this.onMapEditorIsReady = onMapEditorIsReady;
+
+    this.stage = null;
 
     this.lastCursor = null;
 
@@ -17,6 +20,14 @@ export default class ShapesManager {
     this.selectedShapeId = null;
 
     this.unsubscribe = store.subscribe(this.handleStoreChange);
+
+    this.init();
+  }
+  // initialization
+
+  init() {
+    this.onMapEditorIsReady();
+    this.stage = this.mapEditor.stage;
   }
 
   // listeners - events
@@ -51,7 +62,11 @@ export default class ShapesManager {
 
   createShapesNodes(shapes) {
     shapes.forEach((shape) => {
-      const node = createShapeNode(shape, this.handleShapeClick);
+      const node = createShapeNode({
+        shape,
+        stageScale: this.stage.scaleX(),
+        onClick: this.handleShapeClick,
+      });
 
       node.on("mouseenter", () => this.handleShapeMouseEnter(shape));
       node.on("mouseleave", () => this.handleShapeMouseLeave(shape));

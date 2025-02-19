@@ -13,8 +13,9 @@ import ShapesManager from "./ShapesManager";
 import createRandomObjects from "./helpersShapesManager/createRandomObjects";
 
 export default class SceneManager {
-  constructor({containerEl, onRendererIsInitialized}) {
+  constructor({containerEl, onRendererIsReady}) {
     this.containerEl = containerEl;
+    this.onRendererIsReady = onRendererIsReady;
 
     this.scene = new Scene();
     this.renderer = new WebGLRenderer({
@@ -45,7 +46,7 @@ export default class SceneManager {
 
     console.log("[SceneManager] initScene");
 
-    this.addRandomObjects();
+    //this.addRandomObjects();
   };
 
   resizeScene = () => {
@@ -79,13 +80,14 @@ export default class SceneManager {
     this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.containerEl.appendChild(this.renderer.domElement);
+    this.onRendererIsReady();
   };
 
   _addCamera = () => {
     const width = this.containerEl.clientWidth;
     const height = this.containerEl.clientHeight;
     const camera = new PerspectiveCamera(75, width / height, 0.1, 1000);
-    camera.position.z = 5;
+    camera.position.set(10, 10, 10);
     this.scene.add(camera);
     return camera;
   };

@@ -12,7 +12,7 @@ const theme = createTheme({
       },
     },
   },
-  typography: {fontSize: 12},
+  typography: {fontSize: 11},
   palette: {
     shape: {
       default: blueGrey[500],

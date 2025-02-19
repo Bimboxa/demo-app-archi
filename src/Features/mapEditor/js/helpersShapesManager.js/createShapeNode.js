@@ -4,14 +4,13 @@ import getPointsFlatArray from "./getPointsFlatArray";
 
 import theme from "Styles/theme";
 
-export default function createShapeNode(shape, onClick) {
+export default function createShapeNode({shape, stageScale, onClick}) {
   // helper
 
-  const points = getPointsFlatArray(shape.coords2d);
+  const points = getPointsFlatArray(shape.points, {scaleBy: 1 / stageScale});
 
-  let color = shape.selected
-    ? theme.palette.shape.selected
-    : theme.palette.shape.default;
+  let color = shape.color;
+  if (shape.selected) color = theme.palette.shape.selected;
 
   // node
 
@@ -19,7 +18,7 @@ export default function createShapeNode(shape, onClick) {
     points,
     stroke: color,
     fill: color,
-    strokeWidth: 2,
+    strokeWidth: 2 / stageScale,
     closed: true,
   });
 

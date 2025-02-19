@@ -2,11 +2,20 @@ import {useEffect} from "react";
 
 import useShapes from "Features/shapes/hooks/useShapes";
 
-export default function useAutoLoadShapesInThreedEditor({threedEditor}) {
+export default function useAutoLoadShapesInThreedEditor({
+  threedEditor,
+  rendererIsReady,
+}) {
   const shapes = useShapes({widthSelected: true});
+
   useEffect(() => {
-    if (threedEditor) {
+    console.log(
+      "threedEditor.loadShapes",
+      rendererIsReady,
+      threedEditor?.loadShapes
+    );
+    if (threedEditor?.loadShapes) {
       threedEditor.loadShapes(shapes);
     }
-  }, [threedEditor, shapes.length]);
+  }, [rendererIsReady, shapes.length]);
 }

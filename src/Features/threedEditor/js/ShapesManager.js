@@ -1,7 +1,6 @@
 import * as THREE from "three";
 
-import createCubeObject from "./helpersShapesManager/createCubeObject";
-import {create} from "@mui/material/styles/createTransitions";
+import createShapeObject from "./helpersShapesManager/createShapeObject";
 
 export default class ShapesManager {
   constructor({sceneManager}) {
@@ -15,7 +14,7 @@ export default class ShapesManager {
   createShapesObjects(shapes) {
     try {
       shapes.forEach((shape, index) => {
-        const shapeObject = createCubeObject(index);
+        const shapeObject = createShapeObject(shape);
 
         this.shapesObjectsMap[shape.id] = shapeObject;
         this.shapesMap[shape.id] = shape;

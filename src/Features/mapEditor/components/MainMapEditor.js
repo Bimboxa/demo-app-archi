@@ -1,12 +1,10 @@
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useState, useEffect} from "react";
 
 import useAutoLoadShapesInMapEditor from "../hooks/useAutoLoadShapesInMapEditor";
 
 import {Box, Typography} from "@mui/material";
 
 import MapEditor from "Features/mapEditor/js/MapEditor";
-
-import editor from "App/editor";
 
 export default function MainMapEditor() {
   // strings
@@ -16,23 +14,41 @@ export default function MainMapEditor() {
   // ref
 
   const containerRef = useRef();
+  const mapEditorRef = useRef();
+
+  // state
+
+  const [containerElExists, setContainerElExists] = useState(false);
+  const [mapEditorIsReady, setMapEditorIsReady] = useState(false);
 
   // effect - init
 
   useEffect(() => {
-    if (containerRef.current) {
+    const width = containerRef.current?.getBoundingClientRect().width;
+    const height = containerRef.current?.getBoundingClientRect().height;
+    if (width && height) {
+      setContainerElExists(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (containerElExists) {
       const bbox = containerRef.current.getBoundingClientRect();
       const mapEditor = new MapEditor({
         container: "container",
         width: bbox.width,
         height: bbox.height,
+        onMapEditorIsReady: () => setMapEditorIsReady(true),
       });
-      editor.mapEditor = mapEditor;
+      mapEditorRef.current = mapEditor;
     }
-  }, [containerRef.current]);
+  }, [containerElExists]);
 
   // effect - load shapes
-  useAutoLoadShapesInMapEditor({mapEditor: editor.mapEditor});
+  useAutoLoadShapesInMapEditor({
+    mapEditor: mapEditorRef.current,
+    mapEditorIsReady,
+  });
 
   return (
     <Box

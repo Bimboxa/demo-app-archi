@@ -17,21 +17,14 @@ import SceneManager from "./SceneManager";
 import ShapesManager from "./ShapesManager";
 
 export default class ThreedEditor {
-  constructor({containerEl}) {
+  constructor({containerEl, onRendererIsReady}) {
     this.containerEl = containerEl;
 
     this.sceneManager = new SceneManager({
       containerEl,
+      onRendererIsReady,
     });
-    this.shapesManager = new ShapesManager({sceneManager: this.sceneManager});
-    this.rendererIsInitialized = false;
   }
-
-  // constructor handlers
-
-  handleRendererIsInitialized = () => {
-    this.rendererIsInitialized = true;
-  };
 
   // initialize
 
@@ -50,9 +43,8 @@ export default class ThreedEditor {
 
   loadShapes = (shapes) => {
     try {
-      console.log("[ThreedEditor] loadShapes", this.shapesManager);
-      //this.shapesManager.createShapesObjects(shapes);
-      this.sceneManager.addRandomObjects();
+      this.sceneManager.shapesManager.createShapesObjects(shapes);
+      this.renderScene();
     } catch (e) {
       console.log("Error", e);
     }

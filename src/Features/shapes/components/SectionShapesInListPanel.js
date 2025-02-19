@@ -6,7 +6,7 @@ import useShapes from "../hooks/useShapes";
 
 import {setSelectedShapeId} from "Features/shapes/shapesSlice";
 
-import {ListItemButton, List, Typography} from "@mui/material";
+import {ListItemButton, List, Typography, Box} from "@mui/material";
 
 export default function SectionShapesInListPanel() {
   const dispatch = useDispatch();
@@ -25,16 +25,19 @@ export default function SectionShapesInListPanel() {
   }
 
   return (
-    <List>
-      {shapes.map((shape) => (
-        <ListItemButton
-          key={shape.id}
-          selected={shape.selected}
-          onClick={() => handleClick(shape)}
-        >
-          <Typography>{shape.name}</Typography>
-        </ListItemButton>
-      ))}
-    </List>
+    <Box sx={{height: 1, overflowY: "auto"}}>
+      <List>
+        {shapes.map((shape) => (
+          <ListItemButton
+            key={shape.id}
+            selected={shape.selected}
+            onClick={() => handleClick(shape)}
+            divider
+          >
+            <Typography>{shape.name}</Typography>
+          </ListItemButton>
+        ))}
+      </List>
+    </Box>
   );
 }

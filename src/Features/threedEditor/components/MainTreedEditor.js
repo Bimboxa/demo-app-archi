@@ -1,5 +1,7 @@
 import React, {useRef, useState, useEffect, useLayoutEffect} from "react";
 
+import useAutoLoadShapesInThreedEditor from "Features/threedEditor/hooks/useAutoLoadShapesInThreedEditor";
+
 import {Box, Typography} from "@mui/material";
 
 import ThreedEditor from "Features/threedEditor/js/ThreedEditor";
@@ -13,6 +15,7 @@ export default function MainThreedEditor() {
   // state
 
   const [containerElExists, setContainerElExists] = useState(false);
+  const [rendererIsReady, setRendererIsReady] = useState(false); // to trigger the effect load shapes with an existing loadShapes func.
 
   // helpers
 
@@ -35,6 +38,7 @@ export default function MainThreedEditor() {
     if (containerElExists) {
       const threedEditor = new ThreedEditor({
         containerEl: containerRef.current,
+        onRendererIsReady: () => setRendererIsReady(true),
       });
       threedEditor.init();
       threedEditorRef.current = threedEditor;
@@ -44,14 +48,11 @@ export default function MainThreedEditor() {
     }
   }, [containerElExists]);
 
-  // useEffect(() => {
-  //   if (rendererIsInitialized) {
-  //     threedEditorRef.current.renderScene();
-  //   }
-  // }, [rendererIsInitialized]);
-
   // effect - load shapes
-  //useAutoLoadShapesInThreedEditor({threedEditor: threedEditorRef.current});
+  useAutoLoadShapesInThreedEditor({
+    threedEditor: threedEditorRef.current,
+    rendererIsReady,
+  });
 
   return (
     <Box

@@ -1,10 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-import shapesSampleMap from "./data/shampesSampleMap";
+import randomShapesMap from "./data/randomShapesMap";
 
 const shapesInitialState = {
   //
-  shapesMap: shapesSampleMap,
+  shapesMap: randomShapesMap,
   //
   selectedShapeId: [],
 };
