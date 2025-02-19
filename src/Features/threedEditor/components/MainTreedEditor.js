@@ -1,46 +1,57 @@
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useState, useEffect, useLayoutEffect} from "react";
 
 import {Box, Typography} from "@mui/material";
 
 import ThreedEditor from "Features/threedEditor/js/ThreedEditor";
 
-import useAutoLoadShapesInThreedEditor from "../hooks/useAutoLoadShapesInThreedEditor";
-
 export default function MainThreedEditor() {
   // ref
 
   const containerRef = useRef();
-  const editorRef = useRef();
+  const threedEditorRef = useRef();
+
+  // state
+
+  const [containerElExists, setContainerElExists] = useState(false);
 
   // helpers
 
   const animate = () => {
-    if (editorRef.current) {
-      editorRef.current.render();
-    }
+    threedEditorRef.current?.renderScene();
     requestAnimationFrame(animate);
   };
 
   // effect - init
 
   useEffect(() => {
-    if (containerRef.current) {
-      const bbox = containerRef.current.getBoundingClientRect();
+    const width = containerRef.current?.getBoundingClientRect().width;
+    const height = containerRef.current?.getBoundingClientRect().height;
+    if (width && height) {
+      setContainerElExists(true);
+    }
+  }, []);
 
+  useEffect(() => {
+    if (containerElExists) {
       const threedEditor = new ThreedEditor({
         containerEl: containerRef.current,
-        width: bbox.width,
-        height: bbox.height,
       });
-      editorRef.current = threedEditor;
+      threedEditor.init();
+      threedEditorRef.current = threedEditor;
 
+      threedEditor.renderScene();
       //animate();
-      threedEditor.render();
     }
-  }, [containerRef.current]);
+  }, [containerElExists]);
+
+  // useEffect(() => {
+  //   if (rendererIsInitialized) {
+  //     threedEditorRef.current.renderScene();
+  //   }
+  // }, [rendererIsInitialized]);
 
   // effect - load shapes
-  useAutoLoadShapesInThreedEditor({threedEditor: editorRef.current});
+  //useAutoLoadShapesInThreedEditor({threedEditor: threedEditorRef.current});
 
   return (
     <Box
