@@ -1,12 +1,18 @@
 import * as THREE from "three";
 
-export default function createShapeObject(shape) {
+export default function createShapeObject(shape, options) {
   try {
+    // options
+
+    const applyMaterial = options?.applyMaterial;
+
+    // main
+
     const coords2d = shape.points;
     const zInf = shape.zInf;
     const height = shape.height;
     const shapeId = shape.id;
-    const color = new THREE.Color(shape.color);
+    //const color = new THREE.Color(shape.color);
 
     // Ensure coords2d is an array of objects with x and y properties
     if (
@@ -24,7 +30,9 @@ export default function createShapeObject(shape) {
 
     const extrudeSettings = {depth: height, bevelEnabled: false};
     const geometry = new THREE.ExtrudeGeometry(_shape, extrudeSettings);
-    const material = new THREE.MeshBasicMaterial({color});
+
+    let material = applyMaterial;
+    if (!material) material = new THREE.MeshPhongMaterial({color: 0xff0000});
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.z = zInf;
 

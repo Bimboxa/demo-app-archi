@@ -1,12 +1,18 @@
 import React, {useRef, useState, useEffect} from "react";
 
+import {useDispatch} from "react-redux";
+
+import {triggerShapesUpdate} from "Features/shapes/shapesSlice";
+
 import useAutoLoadShapesInMapEditor from "../hooks/useAutoLoadShapesInMapEditor";
 
-import {Box, Typography} from "@mui/material";
+import {Box} from "@mui/material";
 
 import MapEditor from "Features/mapEditor/js/MapEditor";
 
 export default function MainMapEditor() {
+  const dispatch = useDispatch();
+
   // strings
 
   const title = "Map Editor";
@@ -45,6 +51,13 @@ export default function MainMapEditor() {
   }, [containerElExists]);
 
   // effect - load shapes
+
+  useEffect(() => {
+    if (mapEditorIsReady) {
+      dispatch(triggerShapesUpdate());
+    }
+  }, [mapEditorIsReady]);
+
   useAutoLoadShapesInMapEditor({
     mapEditor: mapEditorRef.current,
     mapEditorIsReady,

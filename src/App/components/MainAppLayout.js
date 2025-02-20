@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Box} from "@mui/material";
+import {Box, Paper} from "@mui/material";
 
 import MainListPanel from "Features/listPanel/components/MainListPanel";
 import MainMapEditor from "Features/mapEditor/components/MainMapEditor";
@@ -18,16 +18,29 @@ export default function MainAppLayout() {
         display: "flex",
       }}
     >
-      <Box sx={{width: 0.2, height: 1, border: "1px solid black"}}>
-        <MainListPanel />
+      <Box sx={{p: 4, width: 0.3, height: 1}}>
+        <Paper
+          sx={{width: 1, height: 1, display: "flex", flexDirection: "column"}}
+        >
+          <MainListPanel />
+        </Paper>
       </Box>
 
-      <Box sx={{width: 0.8, height: 1, display: "flex"}}>
-        <Box sx={{width: 0.5, height: 1}}>
-          <MainMapEditor />
+      <Box sx={{width: 0.7, height: 1, display: "flex"}}>
+        <Box sx={{width: 0.5, height: 1, p: 4}}>
+          <Paper
+            sx={{width: 1, height: 1, display: "flex", flexDirection: "column"}}
+          >
+            <MainMapEditor />
+          </Paper>
         </Box>
-        <Box sx={{width: 0.5, height: 1}}>
-          <MainTreedEditor />
+
+        <Box sx={{p: 4, width: 0.5, height: 1}}>
+          <Paper
+            sx={{width: 1, height: 1, display: "flex", flexDirection: "column"}}
+          >
+            <MainTreedEditor />
+          </Paper>
         </Box>
       </Box>
     </Box>

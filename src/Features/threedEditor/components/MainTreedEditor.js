@@ -1,12 +1,13 @@
-import React, {useRef, useState, useEffect, useLayoutEffect} from "react";
+import React, {useRef, useState, useEffect} from "react";
 
 import useAutoLoadShapesInThreedEditor from "Features/threedEditor/hooks/useAutoLoadShapesInThreedEditor";
 
-import {Box, Typography} from "@mui/material";
+import {Box} from "@mui/material";
 
 import ThreedEditor from "Features/threedEditor/js/ThreedEditor";
 
 export default function MainThreedEditor() {
+  console.log("MainThreedEditor");
   // ref
 
   const containerRef = useRef();

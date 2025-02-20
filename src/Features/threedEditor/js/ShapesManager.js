@@ -1,6 +1,6 @@
-import * as THREE from "three";
+import {MeshPhongMaterial} from "three";
 
-import createShapeObject from "./helpersShapesManager/createShapeObject";
+import createShapeObject from "./utilsShapesManager/createShapeObject";
 
 export default class ShapesManager {
   constructor({sceneManager}) {
@@ -9,12 +9,16 @@ export default class ShapesManager {
 
     this.shapesMap = {};
     this.shapesObjectsMap = {};
+
+    this.defaultMaterial = new MeshPhongMaterial({color: 0x00ff00});
   }
 
   createShapesObjects(shapes) {
     try {
       shapes.forEach((shape, index) => {
-        const shapeObject = createShapeObject(shape);
+        const shapeObject = createShapeObject(shape, {
+          applyMaterial: this.defaultMaterial,
+        });
 
         this.shapesObjectsMap[shape.id] = shapeObject;
         this.shapesMap[shape.id] = shape;

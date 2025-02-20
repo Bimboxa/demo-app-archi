@@ -1,7 +1,7 @@
 const randomShapesMap = {};
 
 const length = 100;
-const count = 500;
+const count = 100;
 
 for (let i = 0; i < count; i++) {
   const centerX = Math.random() * length - length / 2;

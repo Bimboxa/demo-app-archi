@@ -2,7 +2,7 @@ import store from "App/store";
 
 import {setSelectedShapeId} from "Features/shapes/shapesSlice";
 
-import createShapeNode from "./helpersShapesManager.js/createShapeNode";
+import createShapeNode from "./utilsShapesManager.js/createShapeNode";
 
 import theme from "Styles/theme";
 
@@ -19,7 +19,7 @@ export default class ShapesManager {
 
     this.selectedShapeId = null;
 
-    this.unsubscribe = store.subscribe(this.handleStoreChange);
+    //this.unsubscribe = store.subscribe(this.handleStoreChange);
 
     this.init();
   }
@@ -51,6 +51,16 @@ export default class ShapesManager {
 
   handleStoreChange = () => {
     console.log("handleStoreChange");
+    // create
+    const shapesUpdatedAt = store.getState().shapes.shapesUpdatedAt;
+    if (this.shapesUpdatedAt !== shapesUpdatedAt) {
+      this.shapesUpdatedAt = shapesUpdatedAt;
+      const shapesMap = store.getState().shapes.shapesMap;
+      const shapes = Object.values(shapesMap);
+      this.redrawShapesNodes(shapes);
+    }
+
+    // select
     const selectedShapeId = store.getState().shapes.selectedShapeId;
     if (this.selectedShapeId !== selectedShapeId) {
       this.unselectShape();
@@ -59,6 +69,11 @@ export default class ShapesManager {
   };
 
   // shapes
+
+  redrawShapesNodes(shapes) {
+    this.deleteAllShapesNodes();
+    this.createShapesNodes(shapes);
+  }
 
   createShapesNodes(shapes) {
     shapes.forEach((shape) => {
@@ -74,6 +89,12 @@ export default class ShapesManager {
       this.mapEditor.layerShapes.add(node);
       this.shapesNodesMap[shape.id] = node;
     });
+    this.mapEditor.layerShapes.batchDraw();
+  }
+
+  deleteAllShapesNodes() {
+    this.mapEditor.layerShapes.destroyChildren();
+    this.shapesNodesMap = {};
     this.mapEditor.layerShapes.batchDraw();
   }
 

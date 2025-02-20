@@ -5,6 +5,7 @@ import randomShapesMap from "./data/randomShapesMap";
 const shapesInitialState = {
   //
   shapesMap: randomShapesMap,
+  shapesUpdatedAt: null,
   //
   selectedShapeId: [],
 };
@@ -16,11 +17,15 @@ export const shapeEditorSlice = createSlice({
     setSelectedShapeId: (state, action) => {
       state.selectedShapeId = action.payload;
     },
+    triggerShapesUpdate: (state) => {
+      state.shapesUpdatedAt = Date.now();
+    },
   },
 });
 
 export const {
   setSelectedShapeId,
+  triggerShapesUpdate,
   //
 } = shapeEditorSlice.actions;
 

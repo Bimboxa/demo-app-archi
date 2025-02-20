@@ -10,4 +10,8 @@ export default configureStore({
     mapEditor: mapEditorReducer,
     threedEditor: threedEditorReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

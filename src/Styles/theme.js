@@ -1,5 +1,5 @@
 import {createTheme} from "@mui/material/styles";
-import {blue, blueGrey, green} from "@mui/material/colors";
+import {blueGrey, green} from "@mui/material/colors";
 
 const theme = createTheme({
   components: {
@@ -14,6 +14,10 @@ const theme = createTheme({
   },
   typography: {fontSize: 11},
   palette: {
+    background: {
+      default: "#F4F4F8",
+      dark: "#F5F5F5",
+    },
     shape: {
       default: blueGrey[500],
       selected: green[500],
