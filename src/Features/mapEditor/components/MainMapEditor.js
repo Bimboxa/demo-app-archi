@@ -13,10 +13,6 @@ import MapEditor from "Features/mapEditor/js/MapEditor";
 export default function MainMapEditor() {
   const dispatch = useDispatch();
 
-  // strings
-
-  const title = "Map Editor";
-
   // ref
 
   const containerRef = useRef();

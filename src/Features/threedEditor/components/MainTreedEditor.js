@@ -20,10 +20,10 @@ export default function MainThreedEditor() {
 
   // helpers
 
-  const animate = () => {
-    threedEditorRef.current?.renderScene();
-    requestAnimationFrame(animate);
-  };
+  // const animate = () => {
+  //   threedEditorRef.current?.renderScene();
+  //   requestAnimationFrame(animate);
+  // };
 
   // effect - init
 
